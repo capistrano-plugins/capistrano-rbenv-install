@@ -8,7 +8,7 @@ Works with Capistrano 3 (only). For Capistrano 2 support check
 
 ### Installation
 
-Install by putting in `Gemfile`:
+Install by adding the following to the `Gemfile`:
 
     gem 'capistrano', '~> 3.1'
     gem 'capistrano-rbenv', '~> 2.0' # required
@@ -58,7 +58,7 @@ chef cookbooks. Instead of manually, you can do it with this plugin now
 
 Imagine you want to quickly deploy a ruby `1.9.2` app to a server that already
 has one or more ruby `2.0.0` apps.
-"Oh, let's just quickly update our cookbooks" - yea right! I'd rather manully
+"Oh, let's just quickly update our cookbooks" - yea right! I'd rather manually
 `ssh` to the server directly and run `rbenv install 1.9.2-p320`. But I don't
 want to manually `ssh` to the server too. In that case I just can install
 `capistrano-rbenv-install` and forget about it altogether.
@@ -91,6 +91,19 @@ It only installs `ruby build` for the purpose of installing ruby.
 - does not setup rbenv for direct use on the server via the command line<br/>
 Example: `ssh`ing to the server and manually running ruby commands is not
 supported.
+
+### More Capistrano automation?
+
+If you'd like to streamline your Capistrano deploys, you might want to check
+these zero-configuration, plug-n-play plugins:
+
+- [capistrano-postgresql](https://github.com/bruno-/capistrano-postgresql)<br/>
+plugin that automates postgresql configuration and setup
+- [capistrano-unicorn-nginx](https://github.com/bruno-/capistrano-unicorn-nginx)<br/>
+no-configuration unicorn and nginx setup with sensible defaults
+- [capistrano-safe-deploy-to](https://github.com/bruno-/capistrano-safe-deploy-to)<br/>
+if you're annoyed that Capistrano does **not** create a deployment path for the
+app on the server (default `/var/www/myapp`), this is what you need!
 
 ### Thanks
 
