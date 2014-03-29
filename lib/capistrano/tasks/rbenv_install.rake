@@ -17,7 +17,7 @@ namespace :rbenv do
   task :install_rbenv do
     on roles fetch(:rbenv_roles) do
       next if test "[ -d #{fetch(:rbenv_path)} ]"
-      execute :git, "clone https://github.com/sstephenson/rbenv.git #{fetch(:rbenv_path)}"
+      execute :git, :clone, 'https://github.com/sstephenson/rbenv.git', fetch(:rbenv_path)
     end
   end
 
@@ -25,7 +25,7 @@ namespace :rbenv do
   task :install_ruby_build do
     on roles fetch(:rbenv_roles) do
       next if test "[ -d #{fetch(:rbenv_ruby_build_path)} ]"
-      execute :git, "clone https://github.com/sstephenson/ruby-build.git #{fetch(:rbenv_ruby_build_path)}"
+      execute :git, :clone, 'https://github.com/sstephenson/ruby-build.git', fetch(:rbenv_ruby_build_path)
     end
   end
 
@@ -33,23 +33,23 @@ namespace :rbenv do
   task :install_ruby do
     on roles fetch(:rbenv_roles) do
       next if test "[ -d #{fetch(:rbenv_ruby_dir)} ]"
-      execute "#{fetch(:rbenv_path)}/bin/rbenv install #{fetch(:rbenv_ruby)}"
+      execute "#{fetch(:rbenv_path)}/bin/rbenv", :install, fetch(:rbenv_ruby)
     end
   end
 
   desc 'Install bundler gem'
   task :install_bundler do
     on roles fetch(:rbenv_roles) do
-      next if test :gem, "query --quiet --installed --name-matches ^bundler$"
-      execute :gem, "install bundler --quiet --no-rdoc --no-ri"
+      next if test :gem, :query, '--quiet --installed --name-matches ^bundler$'
+      execute :gem, :install, :bundler, '--quiet --no-rdoc --no-ri'
     end
   end
 
   desc 'Install rbenv, ruby build and ruby version'
   task :install do
-    invoke "rbenv:install_rbenv"
-    invoke "rbenv:install_ruby_build"
-    invoke "rbenv:install_ruby"
+    invoke 'rbenv:install_rbenv'
+    invoke 'rbenv:install_ruby_build'
+    invoke 'rbenv:install_ruby'
   end
 
   before 'rbenv:validate', 'rbenv:install'
