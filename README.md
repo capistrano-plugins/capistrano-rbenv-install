@@ -10,7 +10,7 @@ Works with Capistrano 3 (only). For Capistrano 2 support check
 
 Install by adding the following to the `Gemfile`:
 
-    gem 'capistrano', '~> 3.1'
+    gem 'capistrano', '~> 3.2.1'
     gem 'capistrano-rbenv', '~> 2.0' # required
     gem 'capistrano-rbenv-install'
 
@@ -94,16 +94,7 @@ supported.
 
 ### More Capistrano automation?
 
-If you'd like to streamline your Capistrano deploys, you might want to check
-these zero-configuration, plug-n-play plugins:
-
-- [capistrano-postgresql](https://github.com/bruno-/capistrano-postgresql)<br/>
-plugin that automates postgresql configuration and setup
-- [capistrano-unicorn-nginx](https://github.com/bruno-/capistrano-unicorn-nginx)<br/>
-no-configuration unicorn and nginx setup with sensible defaults
-- [capistrano-safe-deploy-to](https://github.com/bruno-/capistrano-safe-deploy-to)<br/>
-if you're annoyed that Capistrano does **not** create a deployment path for the
-app on the server (default `/var/www/myapp`), this is what you need!
+Check out [capistrano-plugins](https://github.com/capistrano-plugins) github org.
 
 ### Thanks
 
