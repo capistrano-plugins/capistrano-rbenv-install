@@ -45,7 +45,6 @@ namespace :rbenv do
     end
   end
 
-
   desc 'Install bundler gem'
   task :install_bundler do
     on roles fetch(:rbenv_roles) do
