@@ -27,6 +27,14 @@ namespace :rbenv do
     end
   end
 
+  desc 'Update ruby build - rbenv plugin'
+  task :update_ruby_build do
+    on roles fetch(:rbenv_roles) do
+      next if test "[ ! -d #{rbenv_ruby_build_path} ]"
+      execute :git, "-C #{rbenv_ruby_build_path}", :pull
+    end
+  end
+
   desc 'Install ruby'
   task :install_ruby do
     on roles fetch(:rbenv_roles) do
@@ -34,6 +42,7 @@ namespace :rbenv do
       execute rbenv_bin_executable_path, :install, fetch(:rbenv_ruby)
     end
   end
+
 
   desc 'Install bundler gem'
   task :install_bundler do
@@ -69,7 +78,9 @@ namespace :rbenv do
   end
 
   before 'rbenv:validate', 'rbenv:install'
+  before 'rbenv:install_ruby', 'rbenv:update_rbenv'
   after 'rbenv:map_bins', 'rbenv:install_bundler'
+
   before 'rbenv:install_bundler', 'rbenv:install:remove_bundler_binmaps'
   after 'rbenv:install_bundler', 'rbenv:install:reinsert_bundler_binmaps'
 end
