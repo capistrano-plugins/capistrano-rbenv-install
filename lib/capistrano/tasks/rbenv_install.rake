@@ -39,13 +39,7 @@ namespace :rbenv do
   task :install_bundler do
     on roles fetch(:rbenv_roles) do
       next if test :gem, :query, '--quiet --installed --name-matches ^bundler$'
-
-      bundle_exec_index = SSHKit.config.command_map.prefix[:gem].index('bundle exec')
-      SSHKit.config.command_map.prefix[:gem].reject! { |c| c == 'bundle exec' } unless bundle_exec_index.nil?
-
       execute :gem, :install, :bundler, '--quiet --no-rdoc --no-ri'
-
-      SSHKit.config.command_map.prefix[:gem].insert(bundle_exec_index, 'bundle exec') unless bundle_exec_index.nil?
     end
   end
 
