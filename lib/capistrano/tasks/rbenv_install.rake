@@ -39,7 +39,31 @@ namespace :rbenv do
   task :install_bundler do
     on roles fetch(:rbenv_roles) do
       next if test :gem, :query, '--quiet --installed --name-matches ^bundler$'
+
+      bundle_exec_index = SSHKit.config.command_map.prefix[:gem].index('bundle exec')
+      SSHKit.config.command_map.prefix[:gem].reject! { |c| c == 'bundle exec' } unless bundle_exec_index.nil?
+
       execute :gem, :install, :bundler, '--quiet --no-rdoc --no-ri'
+
+      SSHKit.config.command_map.prefix[:gem].insert(bundle_exec_index, 'bundle exec') unless bundle_exec_index.nil?
+    end
+  end
+
+  namespace :install do
+    desc 'Remove bundler binmaps'
+    task :remove_bundler_binmaps do
+      on roles fetch(:rbenv_roles) do
+        next unless Rake::Task.task_defined?('bundler:map_bins')
+        SSHKit.config.command_map.prefix[:gem].reject! { |c| c == 'bundle exec' }
+      end
+    end
+
+    desc 'Reinsert bundler binmaps'
+    task :reinsert_bundler_binmaps do
+      on roles fetch(:rbenv_roles) do
+        next unless Rake::Task.task_defined?('bundler:map_bins')
+        SSHKit.config.command_map.insert(1,'bundle exec')
+      end
     end
   end
 
@@ -52,4 +76,6 @@ namespace :rbenv do
 
   before 'rbenv:validate', 'rbenv:install'
   after 'rbenv:map_bins', 'rbenv:install_bundler'
+  before 'rbenv:install_bundler', 'rbenv:install:remove_bundler_binmaps'
+  after 'rbenv:install_bundler', 'rbenv:install:reinsert_bundler_binmaps'
 end
