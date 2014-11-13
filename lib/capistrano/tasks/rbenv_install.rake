@@ -56,7 +56,7 @@ namespace :rbenv do
     task :reinsert_bundler_binmaps do
       on roles fetch(:rbenv_roles) do
         next unless Rake::Task.task_defined?('bundler:map_bins')
-        SSHKit.config.command_map.insert(1,'bundle exec')
+        SSHKit.config.command_map.prefix[:gem].insert(1,'bundle exec')
       end
     end
   end
