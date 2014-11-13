@@ -27,6 +27,16 @@ namespace :rbenv do
     end
   end
 
+  desc 'Update ruby build - rbenv plugin'
+  task :update_ruby_build do
+    on roles fetch(:rbenv_roles) do
+      next if test "[ ! -d #{rbenv_ruby_build_path} ]"
+      within rbenv_ruby_build_path do
+        execute :git, :pull
+      end
+    end
+  end
+
   desc 'Install ruby'
   task :install_ruby do
     on roles fetch(:rbenv_roles) do
@@ -43,6 +53,24 @@ namespace :rbenv do
     end
   end
 
+  namespace :install do
+    desc 'Remove bundler binmaps'
+    task :remove_bundler_binmaps do
+      on roles fetch(:rbenv_roles) do
+        next unless Rake::Task.task_defined?('bundler:map_bins')
+        SSHKit.config.command_map.prefix[:gem].reject! { |c| c == 'bundle exec' }
+      end
+    end
+
+    desc 'Reinsert bundler binmaps'
+    task :reinsert_bundler_binmaps do
+      on roles fetch(:rbenv_roles) do
+        next unless Rake::Task.task_defined?('bundler:map_bins')
+        SSHKit.config.command_map.prefix[:gem].insert(1,'bundle exec')
+      end
+    end
+  end
+
   desc 'Install rbenv, ruby build and ruby version'
   task :install do
     invoke 'rbenv:install_rbenv'
@@ -51,5 +79,9 @@ namespace :rbenv do
   end
 
   before 'rbenv:validate', 'rbenv:install'
+  before 'rbenv:install_ruby', 'rbenv:update_ruby_build'
   after 'rbenv:map_bins', 'rbenv:install_bundler'
+
+  before 'rbenv:install_bundler', 'rbenv:install:remove_bundler_binmaps'
+  after 'rbenv:install_bundler', 'rbenv:install:reinsert_bundler_binmaps'
 end

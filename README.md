@@ -36,7 +36,7 @@ Other than that, this plugin does not need any setup.
 
 Run:
 
-    $ bundle exec production deploy
+    $ bundle exec cap production deploy
 
 And watch ruby being installed.
 
