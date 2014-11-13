@@ -78,7 +78,7 @@ namespace :rbenv do
   end
 
   before 'rbenv:validate', 'rbenv:install'
-  before 'rbenv:install_ruby', 'rbenv:update_rbenv'
+  before 'rbenv:install_ruby', 'rbenv:update_ruby_build'
   after 'rbenv:map_bins', 'rbenv:install_bundler'
 
   before 'rbenv:install_bundler', 'rbenv:install:remove_bundler_binmaps'
