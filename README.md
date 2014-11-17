@@ -12,7 +12,7 @@ Install by adding the following to the `Gemfile`:
 
     gem 'capistrano', '~> 3.2.1'
     gem 'capistrano-rbenv', '~> 2.0' # required
-    gem 'capistrano-rbenv-install'
+    gem 'capistrano-rbenv-install', '~> 1.1.0'
 
 then:
 
@@ -36,7 +36,7 @@ Other than that, this plugin does not need any setup.
 
 Run:
 
-    $ bundle exec production deploy
+    $ bundle exec cap production deploy
 
 And watch ruby being installed.
 
