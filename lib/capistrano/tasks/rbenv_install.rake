@@ -36,7 +36,7 @@ namespace :rbenv do
   end
 
   desc 'Install bundler gem'
-  task :install_bundler do
+  task install_bundler: ['rbenv:map_bins'] do
     on roles fetch(:rbenv_roles) do
       next if test :gem, :query, '--quiet --installed --name-matches ^bundler$'
       execute :gem, :install, :bundler, '--quiet --no-rdoc --no-ri'
@@ -48,8 +48,9 @@ namespace :rbenv do
     invoke 'rbenv:install_rbenv'
     invoke 'rbenv:install_ruby_build'
     invoke 'rbenv:install_ruby'
+    invoke 'rbenv:install_bundler'
   end
 
   before 'rbenv:validate', 'rbenv:install'
-  after 'rbenv:map_bins', 'rbenv:install_bundler'
+  before 'bundler:map_bins', 'rbenv:install' if Rake::Task.task_defined?('bundler:map_bins')
 end
