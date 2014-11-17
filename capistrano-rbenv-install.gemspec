@@ -15,7 +15,7 @@ Gem::Specification.new do |gem|
     https://github.com/yyuu/capistrano-rbenv
   EOF
   gem.summary       = "Capistrano plugin for lightweight rubies managment with rbenv."
-  gem.homepage      = "https://github.com/bruno-/capistrano-rbenv-install"
+  gem.homepage      = "https://github.com/capistrano-plugins/capistrano-rbenv-install"
 
   gem.license       = "MIT"
 
