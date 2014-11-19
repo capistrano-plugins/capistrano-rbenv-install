@@ -1,6 +1,7 @@
 # Changelog
 
 ### master
+- update ruby-build before every ruby installation (@jimmynguyc)
 
 ### v1.1.0, 2014-11-17
 - extract paths and urls to a separate module

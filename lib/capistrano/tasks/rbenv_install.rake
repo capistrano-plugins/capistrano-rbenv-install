@@ -27,10 +27,21 @@ namespace :rbenv do
     end
   end
 
+  desc 'Update ruby build - rbenv plugin'
+  task :update_ruby_build do
+    on roles fetch(:rbenv_roles) do
+      next if test "[ ! -d #{rbenv_ruby_build_path} ]"
+      within rbenv_ruby_build_path do
+        execute :git, :pull
+      end
+    end
+  end
+
   desc 'Install ruby'
   task :install_ruby do
     on roles fetch(:rbenv_roles) do
       next if test "[ -d #{fetch(:rbenv_ruby_dir)} ]"
+      invoke 'rbenv:update_ruby_build'
       execute rbenv_bin_executable_path, :install, fetch(:rbenv_ruby)
     end
   end
