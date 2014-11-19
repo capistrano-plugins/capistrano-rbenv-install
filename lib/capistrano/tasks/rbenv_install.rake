@@ -41,6 +41,7 @@ namespace :rbenv do
   task :install_ruby do
     on roles fetch(:rbenv_roles) do
       next if test "[ -d #{fetch(:rbenv_ruby_dir)} ]"
+      invoke 'rbenv:update_ruby_build'
       execute rbenv_bin_executable_path, :install, fetch(:rbenv_ruby)
     end
   end
@@ -63,5 +64,4 @@ namespace :rbenv do
 
   before 'rbenv:validate', 'rbenv:install'
   before 'bundler:map_bins', 'rbenv:install' if Rake::Task.task_defined?('bundler:map_bins')
-  before 'rbenv:install_ruby', 'rbenv:update_ruby_build'
 end
