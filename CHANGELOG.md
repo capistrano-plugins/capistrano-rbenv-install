@@ -1,6 +1,8 @@
 # Changelog
 
 ### master
+
+### v1.2.0, 2014-11-19
 - update ruby-build before every ruby installation (@jimmynguyc)
 
 ### v1.1.0, 2014-11-17

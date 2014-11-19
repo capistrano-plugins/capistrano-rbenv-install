@@ -12,7 +12,7 @@ Install by adding the following to the `Gemfile`:
 
     gem 'capistrano', '~> 3.2.1'
     gem 'capistrano-rbenv', '~> 2.0' # required
-    gem 'capistrano-rbenv-install', '~> 1.1.0'
+    gem 'capistrano-rbenv-install', '~> 1.2.0'
 
 then:
 
