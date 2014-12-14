@@ -1,6 +1,8 @@
 # Changelog
 
 ### master
+- directory test should return success in `update_ruby_build`
+  task (@maxstepanov)
 
 ### v1.2.0, 2014-11-19
 - update ruby-build before every ruby installation (@jimmynguyc)
