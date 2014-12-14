@@ -30,7 +30,7 @@ namespace :rbenv do
   desc 'Update ruby build - rbenv plugin'
   task :update_ruby_build do
     on roles fetch(:rbenv_roles) do
-      next if test "[ ! -d #{rbenv_ruby_build_path} ]"
+      next unless test "[ -d #{rbenv_ruby_build_path} ]"
       within rbenv_ruby_build_path do
         execute :git, :pull
       end
