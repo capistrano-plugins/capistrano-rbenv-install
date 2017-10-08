@@ -11,6 +11,13 @@ include Capistrano::DSL::RbenvInstall
 # set :rbenv_ruby_dir           # "#{fetch(:rbenv_path)}/versions/#{fetch(:rbenv_ruby)}" }
 
 namespace :rbenv do
+  desc 'Install required dependencies for Ruby compiling'
+  task :install_dependencies do
+    on roles fetch(:rbenv_roles) do
+      execute 'apt-get install -y libssl-dev libreadline-dev zlib1g-dev'
+    end
+  end
+
   desc 'Install rbenv'
   task :install_rbenv do
     on roles fetch(:rbenv_roles) do
@@ -56,6 +63,7 @@ namespace :rbenv do
 
   desc 'Install rbenv, ruby build and ruby version'
   task :install do
+    invoke 'rbenv:install_dependencies'
     invoke 'rbenv:install_rbenv'
     invoke 'rbenv:install_ruby_build'
     invoke 'rbenv:install_ruby'
