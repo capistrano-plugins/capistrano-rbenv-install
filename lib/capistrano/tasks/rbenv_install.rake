@@ -14,6 +14,7 @@ namespace :rbenv do
   desc 'Install required dependencies for Ruby compiling'
   task :install_dependencies do
     on roles fetch(:rbenv_roles) do
+      next if test "[ -d #{fetch(:rbenv_path)} ]"
       sudo 'apt-get install -y libssl-dev libreadline-dev zlib1g-dev'
     end
   end
