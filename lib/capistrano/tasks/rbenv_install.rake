@@ -50,7 +50,7 @@ namespace :rbenv do
   task install_bundler: ['rbenv:map_bins'] do
     on roles fetch(:rbenv_roles) do
       next if test :gem, :query, '--quiet --installed --name-matches ^bundler$'
-      execute :gem, :install, :bundler, '--quiet --no-rdoc --no-ri'
+      execute :gem, :install, :bundler, fetch(:rbenv_bundler_options, '--quiet --no-rdoc --no-ri')
     end
   end
 
