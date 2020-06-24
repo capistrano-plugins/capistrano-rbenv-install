@@ -31,6 +31,10 @@ So make sure to properly setup `capistrano-rbenv` and you'll be good.
 For example, in `config/deploy.rb`:
 
     set :rbenv_ruby, '2.0.0-p247'
+    set :rbenv_bundler_version, '> 2.0'
+    set :rbenv_bundler_options, '--quiet --no-documents'
+
+Note: bundler 2 replace options --no-ri --no-rdoc with --no-documents
 
 Other than that, this plugin does not need any setup.
 
